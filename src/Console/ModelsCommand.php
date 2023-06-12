@@ -1006,6 +1006,19 @@ class ModelsCommand extends Command
             $phpdoc->appendTag($tag);
         }
 
+        foreach ($this->methods as $name => $method) {
+            if (in_array($name, $methods)) {
+                continue;
+            }
+            $arguments = implode(', ', $method['arguments']);
+            $tagLine = "@method {$method['type']} {$name}({$arguments})";
+            if ($method['comment'] !== '') {
+                $tagLine .= " {$method['comment']}";
+            }
+            $tag = Tag::createInstance($tagLine, $phpdoc);
+            $phpdoc->appendTag($tag);
+        }
+
         if ($this->write) {
             $eloquentClassNameInModel = $this->getClassNameInDestinationFile($reflection, 'Eloquent');
 
