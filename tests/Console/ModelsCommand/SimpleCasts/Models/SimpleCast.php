@@ -22,6 +22,7 @@ class SimpleCast extends Model
         'cast_to_array' => 'array',
         'cast_to_json' => 'json',
         'cast_to_collection' => 'collection',
+        'cast_to_enum_collection' => 'collection',
         'cast_to_date' => 'date',
         'cast_to_datetime' => 'datetime',
         'cast_to_date_serialization' => 'date:Y-m-d',
@@ -38,5 +39,6 @@ class SimpleCast extends Model
         'cast_to_encrypted_collection' => 'encrypted:collection',
         'cast_to_encrypted_json' => 'encrypted:json',
         'cast_to_encrypted_object' => 'encrypted:object',
+        'cast_to_hashed' => 'hashed',
     ];
 }
