@@ -13,6 +13,7 @@ namespace Barryvdh\LaravelIdeHelper;
 
 use Barryvdh\LaravelIdeHelper\Console\EloquentCommand;
 use Barryvdh\LaravelIdeHelper\Console\GeneratorCommand;
+use Barryvdh\LaravelIdeHelper\Console\JobsCommand;
 use Barryvdh\LaravelIdeHelper\Console\MetaCommand;
 use Barryvdh\LaravelIdeHelper\Console\ModelsCommand;
 use Barryvdh\LaravelIdeHelper\Listeners\GenerateModelHelper;
@@ -81,6 +82,13 @@ class IdeHelperServiceProvider extends ServiceProvider implements DeferrableProv
         );
 
         $this->app->singleton(
+            'command.ide-helper.jobs',
+            function ($app) {
+                return new JobsCommand($app['files']);
+            }
+        );
+
+        $this->app->singleton(
             'command.ide-helper.meta',
             function ($app) use ($localViewFactory) {
                 return new MetaCommand($app['files'], $localViewFactory, $app['config']);
@@ -98,7 +106,8 @@ class IdeHelperServiceProvider extends ServiceProvider implements DeferrableProv
             'command.ide-helper.generate',
             'command.ide-helper.models',
             'command.ide-helper.meta',
-            'command.ide-helper.eloquent'
+            'command.ide-helper.eloquent',
+            'command.ide-helper.jobs'
         );
     }
 

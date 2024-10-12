@@ -973,21 +973,11 @@ class ModelsCommand extends Command
             if (in_array($name, $methods)) {
                 continue;
             }
+            $shouldStatic = in_array($name, [
+                'query',
+            ]);
             $arguments = implode(', ', $method['arguments']);
-            $tagLine = "@method static {$method['type']} {$name}({$arguments})";
-            if ($method['comment'] !== '') {
-                $tagLine .= " {$method['comment']}";
-            }
-            $tag = Tag::createInstance($tagLine, $phpdoc);
-            $phpdoc->appendTag($tag);
-        }
-
-        foreach ($this->methods as $name => $method) {
-            if (in_array($name, $methods)) {
-                continue;
-            }
-            $arguments = implode(', ', $method['arguments']);
-            $tagLine = "@method {$method['type']} {$name}({$arguments})";
+            $tagLine = "@method ".($shouldStatic ? 'static' : '')." {$method['type']} {$name}({$arguments})";
             if ($method['comment'] !== '') {
                 $tagLine .= " {$method['comment']}";
             }
@@ -1519,7 +1509,10 @@ class ModelsCommand extends Command
     {
         $fullBuilderClass = '\\' . get_class($model->newModelQuery());
         $newBuilderMethods = get_class_methods($fullBuilderClass);
-        $originalBuilderMethods = get_class_methods('\Illuminate\Database\Eloquent\Builder');
+        $originalBuilderMethods = array_merge(
+            get_class_methods('\Illuminate\Database\Eloquent\Builder'),
+            get_class_methods('\SocolaDaiCa\LaravelBadassium\Illuminate\Database\Eloquent\Builder'),
+        );
 
         // diff the methods between the new builder and original one
         // and create helpers for the ones that are new

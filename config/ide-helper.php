@@ -311,4 +311,20 @@ return [
         // 'ide-helper:models --nowrite',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Job locations to include
+    |--------------------------------------------------------------------------
+    |
+    | Define in which directories the ide-helper:models command should look
+    | for models.
+    |
+    | glob patterns are supported to easier reach models in sub-directories,
+    | e.g. `app/Jobs/*` (without the space).
+    |
+    */
+
+    'job_locations' => [
+        'app/Jobs',
+    ],
 ];
