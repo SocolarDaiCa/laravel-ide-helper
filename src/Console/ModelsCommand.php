@@ -973,6 +973,12 @@ class ModelsCommand extends Command
             if (in_array($name, $methods)) {
                 continue;
             }
+
+            $method['type'] = Str::replace(
+                '\SocolaDaiCa\LaravelBadassium\Illuminate\Database\Eloquent\Builder',
+                '\SocolaDaiCa\LaravelBadassium\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder<static>',
+                $method['type'],
+            );
             $shouldStatic = in_array($name, [
                 'query',
             ]);
